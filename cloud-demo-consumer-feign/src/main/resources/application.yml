@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: consumer-demo
+  rabbitmq:
+    host: localhost #192.168.1.18
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+    listener:
+      simple:
+        concurrency: 10
+        max-concurrency: 10
+        auto-startup: true
+        default-requeue-rejected: true
+        prefetch: 1
+        retry:
+          enabled: true
+          initial-interval: 1000
+          max-attempts: 3
+          max-interval: 10000
+          multiplier: 1.0
+server:
+  port: 10002
+
+eurekaServer:
+  host: localhost
+  port: 9999
+  user: root
+  password: root
+
+eureka:
+  client:
+    #将此项目注册到Eureka服务
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://${eurekaServer.user}:${eurekaServer.password}@${eurekaServer.host}:${eurekaServer.port}/eureka
+
+#为服务Id名称为provider-demo的项目配置负载均衡规则为com.netflix.loadbalancer.WeightedResponseTimeRule
+provider-demo:
+  ribbon:
+    #WeightedResponseTimeRule这个策略每30秒计算一次服务器响应时间，以响应时间作为权重，响应时间越短的服务器被选中的概率越大。
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule

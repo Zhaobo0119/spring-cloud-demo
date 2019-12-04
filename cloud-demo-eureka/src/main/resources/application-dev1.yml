@@ -1,0 +1,14 @@
+server:
+  host: localhost
+  port: 9999
+eureka:
+  server:
+    # 心跳统计阈值
+    renewal-percent-threshold: 0.49
+  client:
+    #此项目不作为客户端注册
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      #开启权限验证后Eureka地址为 用户名：密码@地址：端口号，如未开启权限验证则直接使用 地址：端口号
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@${server.host}:${server.port}/eureka

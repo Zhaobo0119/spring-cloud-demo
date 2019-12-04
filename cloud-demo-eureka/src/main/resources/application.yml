@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: eureka-server-high
+  #开启权限认证
+  security:
+    basic:
+      enabled: true
+    user:
+      name: root
+      password: root
+
+# 自定义标签 启动多个不同端口的eureka服务
+dev:
+  host: localhost
+  dev1Port: 9999
+  dev2Port: 8999
+  dev3Port: 8998
